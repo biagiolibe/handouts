@@ -1,0 +1,13 @@
+To do list Handouts app
+
+- Fix index generation mechanism
+- Manage styles on notes
+- Get an App id for accessing drive API (publish on Chrome store)
+- Fix the edit mechanism on the notes
+- Add tag mechanism
+- Add search on notes
+- Add paragraphs and pages mechanisms
+- Add comment on notes
+- Add smart suggestions on saved notes
+- Add positioning mechanism
+- Add enable / disable button

@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name"            : "Handouts",
+  "description"     : "Minimal notes app using angularJS",
+  "short_name"      : "Notes",
+  "version"         : "0.1",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon" : "images/logo.png"
+  },
+  "oauth2": {
+    "client_id": "418173806542-l9ubcijpuo27dasr7rj03ie8deb3mas4.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["app/content-script.js"]
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "background",
+    "tabs",
+    "storage",
+    "debugger",
+    "identity"
+  ],
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com/ https://apis.google.com/; object-src 'self'"
+}

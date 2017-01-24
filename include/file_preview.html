@@ -1,0 +1,34 @@
+
+    <!-- Preview page content s-->
+<div class="page-content">
+      <div class="centeritems mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">
+          <div class="mdl-card mdl-shadow--2dp ho-card">
+            <div class="mdl-card__supporting-text mdl-card--expand angular-with-newlines" ng-if="editText">
+                  <textarea class="mdl-textfield__input" id="text_content" ng-model="text_document.text_content" elastic></textarea>
+            </div>
+            <div class="mdl-card__supporting-text mdl-card--expand angular-with-newlines" ng-show="!editText">
+              {{text_document.text_content}}
+            </div>
+            <!-- to preserve html style: <p ng-bind-html="text | unsafe"></p> -->
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="editText=true">EDIT</a>
+              <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="editText=false">DONE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="mdl-button--fab_flinger-container--left">
+  <div class="mdl-tooltip mdl-tooltip--top" for="back">Back</div>
+  <button id="back" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="#"  ng-click="backToHome('filePreview')">
+    <i class="material-icons">arrow_back</i>
+  </button>
+
+</div>
+<div class="mdl-button--fab_flinger-container">
+  <div class="mdl-tooltip mdl-tooltip--top" for="create_file">Create file</div>
+    <button id="create_file" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="createFile(text_document.text_content, text_document.document_type)">
+      <i class="material-icons">send</i>
+    </button>
+</div>

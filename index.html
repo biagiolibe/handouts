@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Angular Notes Chrome Extension</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-indigo.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+<body ng-app="app">
+
+  <div ng-controller="ctrl" class="mdl-layout mdl-js-layout mdl-color--grey-100 mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+
+    <div class="mdl-layout__header-row">
+      <!-- App Logo -->
+      <img src="images/logo.png" class="app-logo">
+      <!-- Title -->
+      <span class="mdl-layout-title">Handouts</span>
+    </div>
+  </header>
+
+  <main class="mdl-layout__content">
+
+      <!-- home/notes list -->
+      <ng-include src="'home.html'" ng-show="isHome()"></ng-include>
+
+      <!-- document preview -->
+      <ng-include src="'file_preview.html'" ng-show="isFilePreview()"></ng-include>
+
+
+  </main>
+  <footer class="mdl-mini-footer mdl-color--grey-100">
+
+  </footer>
+</div>
+
+
+    <!-- Angular.js Libraries -->
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="app/angular-loadscript.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-route.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-animate.min.js"></script>
+
+    <script type="text/javascript" src="lib/jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="lib/mdl/js/material.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/ctrl.js"></script>
+
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <script type="text/javascript" src="app/storageManager.js"></script>
+    <script type="text/javascript" src="app/driveManager.js"></script>
+    <script type="text/javascript" src="lib/FileSaver/FileSaver.min.js"></script>
+    <script type="text/javascript" src="lib/Blob/Blob.js"></script>
+    <script type="text/javascript" src="lib/pdfMake/pdfMake.js"></script>
+    <script type="text/javascript" src='lib/pdfMake/vfs_fonts.js'></script>
+    <script type="text/javascript" src="app/fileManager.js"></script>
+
+
+</body>
+</html>

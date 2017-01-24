@@ -1,0 +1,39 @@
+<script type="text/javascript-lazy" src="js/style.js"></script>
+
+<div class="page-content">
+      <div class="centeritems mdl-grid">
+
+        <div class="mdl-cell mdl-cell--4-col" ng-repeat="note in noteList track by note.id">
+          <div class="mdl-card mdl-shadow--2dp ho-card">
+            <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}}</div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="remove(note)">REMOVE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="mdl-button--fab_flinger-container--left">
+      <div class="mdl-tooltip mdl-tooltip--top" for="remove_all">Remove all notes</div>
+      <button id="remove_all" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="#"  ng-click="removeAll()" ng-show="noteList.length > 0">
+        <i class="material-icons">clear</i>
+      </button>
+
+    </div>
+    <div id="fab_ctn" class="mdl-button--fab_flinger-container">
+        <button id="fab_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-show="noteList.length > 0">
+          <i class="material-icons">book</i>
+        </button>
+        <div class="mdl-button--fab_flinger-options">
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('TXT')">
+            TXT
+            <!--<i class="material-icons">local_printshop</i>-->
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('PDF')">
+            PDF
+            <!--<i class="material-icons">local_printshop</i>-->
+          </button>
+        </div>
+        
+  </div>

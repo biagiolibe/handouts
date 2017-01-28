@@ -16,6 +16,7 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
 
     $scope.storageManager.findAll(function(data){
         $scope.noteList = data;
+        console.log(data);
         $scope.$apply();
     });
 
@@ -35,14 +36,14 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
     /*
     * Create a new drive document
     */
-    $scope.create = function(){
+    $scope.driveCreate = function(){
       driveManager.createFile();
     }
 
     /*
-    * List all document
+    * List all drive document
     */
-    $scope.list = function(){
+    $scope.driveList = function(){
       driveManager.handleAuth();
     }
 
@@ -87,12 +88,15 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
     }
 
 });
+
 angular.module('app').filter('unsafe', function($sce) {//spostare in filters
     return function(val) {
       return $sce.trustAsHtml(val);
     };
 
-}).directive('elastic', ['$timeout', function($timeout) { //spostare in directives
+});
+
+angular.module('app').directive('elastic', ['$timeout', function($timeout) { //spostare in directives
         return {
             restrict: 'A',
             link: function($scope, element) {

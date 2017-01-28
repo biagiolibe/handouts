@@ -49,7 +49,7 @@ this.handleAuth =function() {
       console.log(chrome.runtime.lastError);
     }
   });
-}
+};
 
 /**
  * Load Drive API client library.
@@ -88,7 +88,7 @@ this.createFile=function(){
       };
     }
     request.execute(callback);
-}
+};
 
 /**
  * Print files.
@@ -111,7 +111,7 @@ console.log('list');
         appendPre('No files found.');
       }
     });
-}
+};
 
 /**
  * Append a pre element to the body containing the given message
@@ -123,5 +123,5 @@ function appendPre(message) {
   var pre = document.getElementById('output');
   var textContent = document.createTextNode(message + '\n');
   pre.appendChild(textContent);
-};
+}
 });

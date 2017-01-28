@@ -6,7 +6,7 @@ angular.module('app').service('storageManager', function ($q) {
         chrome.storage.sync.get('notes', function(keys) {
             if (keys.notes !== null) {
                 _this.data = JSON.parse(keys.notes);
-                console.log(_this.data);
+                // console.log(_this.data);
                 callback(_this.data);
             }
         });

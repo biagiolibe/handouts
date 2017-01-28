@@ -1,6 +1,7 @@
 To do list Handouts app
 
-- Fix index generation mechanism
++ Fix index generation mechanism
+- Add enable / disable button
 - Manage styles on notes
 - Get an App id for accessing drive API (publish on Chrome store)
 - Fix the edit mechanism on the notes
@@ -10,4 +11,3 @@ To do list Handouts app
 - Add comment on notes
 - Add smart suggestions on saved notes
 - Add positioning mechanism
-- Add enable / disable button

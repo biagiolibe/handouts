@@ -4,26 +4,26 @@ angular.module('app').service('storageManager', function ($q) {
 
     this.findAll = function(callback) {
         chrome.storage.sync.get('notes', function(keys) {
-            if (keys.notes != null) {
+            if (keys.notes !== null) {
                 _this.data = JSON.parse(keys.notes);
-                // for (var i=0; i<_this.data.length; i++) {
-                //     _this.data[i]['id'] = i + 1;
-                // }
                 console.log(_this.data);
                 callback(_this.data);
             }
         });
-    }
+    };
+
+
 
     this.sync = function() {
         chrome.storage.sync.set({'notes': JSON.stringify(this.data)}, function() {
             console.log('Data is stored in Chrome storage');
         });
-    }
+    };
+
 
     this.add = function (newContent) {
         var date = new Date();
-        var id = new String(newContent + date).hashCode();
+        var id = date;
         var note = {
             id: id,
             content: newContent,
@@ -32,17 +32,17 @@ angular.module('app').service('storageManager', function ($q) {
         };
         this.data.push(note);
         this.sync();
-    }
+    };
 
     this.remove = function(note) {
         this.data.splice(this.data.indexOf(note), 1);
         this.sync();
-    }
+    };
 
     this.removeAll = function() {
         this.data = [];
         this.sync();
-    }
+    };
 
     this.hashCode = function(string) {
       var hash = 0, i, chr, len;

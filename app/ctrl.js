@@ -16,36 +16,35 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
 
     $scope.storageManager.findAll(function(data){
         $scope.noteList = data;
-        console.log(data);
         $scope.$apply();
     });
 
     $scope.add = function() {
         storageManager.add($scope.newContent);
         $scope.newContent = '';
-    }
+    };
 
     $scope.remove = function(note) {
         storageManager.remove(note);
-    }
+    };
 
     $scope.removeAll = function() {
         storageManager.removeAll();
-    }
+    };
 
     /*
     * Create a new drive document
     */
     $scope.driveCreate = function(){
       driveManager.createFile();
-    }
+    };
 
     /*
     * List all drive document
     */
     $scope.driveList = function(){
       driveManager.handleAuth();
-    }
+  };
 
     $scope.generateFile = function(fileType){
       var text='';
@@ -62,7 +61,7 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
       views.filePreview=true;
       views.home=false;
 
-    }
+    };
 
     $scope.createFile=function(txtContent, fileType){
       if(fileType == 'TXT'){
@@ -71,21 +70,21 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
       else if(fileType == 'PDF'){
         fileManager.createPDF(txtContent, 'handouts_document');
       }
-    }
+    };
 
 
     $scope.isFilePreview=function(){
       return views.filePreview;
-    }
+    };
 
     $scope.isHome=function(){
       return views.home;
-    }
+    };
 
     $scope.backToHome=function(from){
       views[from]=!views[from];
       views['home']=true;
-    }
+    };
 
 });
 

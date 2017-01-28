@@ -23,7 +23,7 @@ angular.module('app').service('storageManager', function ($q) {
 
     this.add = function (newContent) {
         var date = new Date();
-        var id = date;
+        var id = +date;
         var note = {
             id: id,
             content: newContent,

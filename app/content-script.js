@@ -7,11 +7,11 @@ document.addEventListener('mouseup', function(tab) {
     var date=new Date();
 
     storage.get('notes', function(obj){
-      if(obj.notes != null){
+      if(obj.notes !== null){
         notes=JSON.parse(obj.notes).slice(0);
       }
       var new_note = {
-          id: new String(highlighted + date).hashCode(),
+          id: +date,
           content: highlighted,
           createdAt: date
       };
@@ -25,7 +25,7 @@ document.addEventListener('mouseup', function(tab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-      
+
       // if(request.type == 'CREATE_FILE'){
       //   var data = new Blob([request.dataContent], { type: request.typeContent });
       //   saveAs(data, request.filename);

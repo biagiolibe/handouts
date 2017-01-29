@@ -8,6 +8,10 @@
     "default_popup": "index.html",
     "default_icon" : "images/logo.png"
   },
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
   "oauth2": {
     "client_id": "418173806542-l9ubcijpuo27dasr7rj03ie8deb3mas4.apps.googleusercontent.com",
     "scopes": [

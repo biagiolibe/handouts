@@ -1,17 +1,28 @@
 angular.module('app').service('storageManager', function ($q) {
     var _this = this;
     this.data = [];
+    this.options = {};
 
     this.findAll = function(callback) {
         chrome.storage.sync.get('notes', function(keys) {
-            if (keys.notes !== null) {
-                _this.data = JSON.parse(keys.notes);
-                // console.log(_this.data);
-                callback(_this.data);
+            console.log("findAll");
+            if (keys.notes != null) {
+                try {
+                    _this.data = JSON.parse(keys.notes);
+                } catch (e) {
+                    this.removeAll();
+                } finally {
+                    callback(_this.data);
+                }
+
             }
         });
     };
 
+    this.updateSettings = function(settings) {
+        chrome.storage.sync.set({'Settings': JSON.stringify(settings)}, function() {
+        });
+    };
 
 
     this.sync = function() {

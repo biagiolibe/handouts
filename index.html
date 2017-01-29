@@ -1,43 +1,74 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
     <title>Angular Notes Chrome Extension</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-indigo.min.css"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-indigo.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 </head>
+
 <body ng-app="app">
 
-  <div ng-controller="ctrl" class="mdl-layout mdl-js-layout mdl-color--grey-100 mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
+    <div ng-controller="ctrl" class="mdl-layout mdl-js-layout mdl-color--grey-100 mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
 
-    <div class="mdl-layout__header-row">
-      <!-- App Logo -->
-      <img src="images/logo.png" class="app-logo">
-      <!-- Title -->
-      <span class="mdl-layout-title">Handouts</span>
+            <div class="mdl-layout__header-row">
+                <!-- App Logo -->
+                <img src="images/logo.png" class="app-logo">
+                <!-- Title -->
+                <span class="mdl-layout-title">Handouts</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="search" id="fixed-header-drawer-exp">
+                    </div>
+                </div>
+
+                <!-- Right aligned menu button -->
+                <button id="menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                  <i class="material-icons">more_vert</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-lower-right">
+                    <li class="mdl-menu__item" ng-click="enableOrDisable()">
+                        <span ng-show="isActive()">
+                            Disables handouts
+                        </span>
+                        <span ng-show="!isActive()">
+                            Enables handouts
+                        </span>
+                    </li>
+                    <li class="mdl-menu__item" ng-click="showOptions()">Preferences</li>
+                    <!-- <li disabled class="mdl-menu__item">Disabled Action</li> -->
+                </ul>
+
+            </div>
+        </header>
+
+        <main class="mdl-layout__content">
+
+            <!-- home/notes list -->
+            <ng-include src="'include/home.html'" ng-show="isHome()"></ng-include>
+
+            <!-- document preview -->
+            <ng-include src="'include/file_preview.html'" ng-show="isFilePreview()"></ng-include>
+
+
+        </main>
+        <footer class="mdl-mini-footer mdl-color--grey-100">
+
+        </footer>
     </div>
-  </header>
-
-  <main class="mdl-layout__content">
-
-      <!-- home/notes list -->
-      <ng-include src="'include/home.html'" ng-show="isHome()"></ng-include>
-
-      <!-- document preview -->
-      <ng-include src="'include/file_preview.html'" ng-show="isFilePreview()"></ng-include>
-
-
-  </main>
-  <footer class="mdl-mini-footer mdl-color--grey-100">
-
-  </footer>
-</div>
 
 
     <!-- Angular.js Libraries -->
@@ -57,9 +88,10 @@
     <script type="text/javascript" src="lib/FileSaver/FileSaver.min.js"></script>
     <script type="text/javascript" src="lib/Blob/Blob.js"></script>
     <script type="text/javascript" src="lib/pdfMake/pdfMake.js"></script>
-    <script type="text/javascript" src='lib/pdfMake/vfs_fonts.js'></script>
+    <script type="text/javascript" src="lib/pdfMake/vfs_fonts.js"></script>
     <script type="text/javascript" src="app/fileManager.js"></script>
 
 
 </body>
+
 </html>

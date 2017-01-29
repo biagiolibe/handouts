@@ -4,13 +4,30 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
 
     $scope.storageManager = storageManager;
     $scope.driveManager=driveManager;
-    $scope.fileManager=fileManager;
+    $scope.fileManager=fileManager
+    $scope.settings = chrome.extension.getBackgroundPage().Settings;
+
     var views={
       home:true,
       filePreview:false
     };
 
+
+    $scope.isActive=function(){
+      return $scope.settings.active;
+    };
+
+    $scope.showOptions = function(){
+      //Open window with options
+    };
+
+    $scope.enableOrDisable = function(){
+      $scope.settings.active=!$scope.settings.active;
+      $scope.storageManager.updateSettings($scope.settings);
+    };
+
     $scope.$watch('storageManager.data', function() {
+      console.log("noteList");
         $scope.noteList = $scope.storageManager.data;
     });
 

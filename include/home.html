@@ -3,9 +3,9 @@
 <div class="page-content">
       <div class="centeritems mdl-grid">
 
-        <div class="mdl-cell mdl-cell--4-col" ng-repeat="note in noteList track by note.id">
+        <div class="mdl-cell mdl-cell--4-col" ng-repeat="note in noteList | filter: search_text">
           <div class="mdl-card mdl-shadow--2dp ho-card">
-            <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}}{{note.id}}</div>
+            <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}}</div>
             <div class="mdl-card__actions mdl-card--border">
               <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="remove(note)">REMOVE</a>
             </div>
@@ -31,8 +31,7 @@
             <!--<i class="material-icons">local_printshop</i>-->
           </button>
           <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('PDF')">
-            PDF
-            <!--<i class="material-icons">local_printshop</i>-->
+            <i class="material-icons">picture_as_pdf</i>
           </button>
         </div>
 

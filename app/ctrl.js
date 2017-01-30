@@ -89,6 +89,10 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
       }
     };
 
+    /* TODO maybe it would be convenient to change the views object for including information of searchable for each view. */
+    $scope.isContentSearchable=function(){
+      return views.home;
+    };
 
     $scope.isFilePreview=function(){
       return views.filePreview;

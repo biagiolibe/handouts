@@ -24,19 +24,19 @@
                 <!-- Title -->
                 <span class="mdl-layout-title">Handouts</span>
                 <div class="mdl-layout-spacer"></div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                <div ng-show="isContentSearchable()" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
                     <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
                         <i class="material-icons">search</i>
                     </label>
                     <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" name="search" id="fixed-header-drawer-exp">
+                        <input class="mdl-textfield__input" type="text" name="search" ng-model="search_text" id="fixed-header-drawer-exp">
                     </div>
                 </div>
 
                 <!-- Right aligned menu button -->
                 <button id="menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
-                  <i class="material-icons">more_vert</i>
+                  <i class="material-icons">settings</i>
                 </button>
 
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-lower-right">

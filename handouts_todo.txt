@@ -1,6 +1,6 @@
 To do list Handouts app
 
-- Add translation mode (when captured, notes are automatically translated)
++ Add translation mode (when captured, notes are automatically translated) --to complete.
 + Fix index generation mechanism
 + Add enable / disable mechanism (Settings management)
 + Add search on notes

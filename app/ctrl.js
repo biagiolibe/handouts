@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('ctrl', function ($scope, storageManager, driveManager, fileManager) {
+angular.module('app').controller('ctrl', function ($scope, storageManager, driveManager, fileManager, translationManager) {
 
     $scope.storageManager = storageManager;
     $scope.driveManager=driveManager;
@@ -33,6 +33,11 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
 
     $scope.storageManager.findAll(function(data){
         $scope.noteList = data;
+        // for(var note in $scope.noteList){
+        //   translationManager.translate($scope.noteList[note].content, 'en', 'it', function(translated){
+        //     console.log(translated);
+        //   });
+        // }
         $scope.$apply();
     });
 

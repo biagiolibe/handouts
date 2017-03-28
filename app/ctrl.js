@@ -16,6 +16,9 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
     $scope.isActive=function(){
       return $scope.settings.active;
     };
+    $scope.isTranslationMode=function(){
+      return $scope.settings.translation.enabled;
+    };
 
     $scope.showOptions = function(){
       //Open window with options
@@ -25,19 +28,17 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
       $scope.settings.active=!$scope.settings.active;
       $scope.storageManager.updateSettings($scope.settings);
     };
+    $scope.enableOrDisableTranslation = function(){
+      $scope.settings.translation.enabled=!$scope.settings.translation.enabled;
+      $scope.storageManager.updateSettings($scope.settings);
+    };
 
     $scope.$watch('storageManager.data', function() {
-      console.log("noteList");
         $scope.noteList = $scope.storageManager.data;
     });
 
     $scope.storageManager.findAll(function(data){
         $scope.noteList = data;
-        // for(var note in $scope.noteList){
-        //   translationManager.translate($scope.noteList[note].content, 'en', 'it', function(translated){
-        //     console.log(translated);
-        //   });
-        // }
         $scope.$apply();
     });
 

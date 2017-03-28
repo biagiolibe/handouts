@@ -5,7 +5,6 @@ angular.module('app').service('storageManager', function ($q) {
 
     this.findAll = function(callback) {
         chrome.storage.sync.get('notes', function(keys) {
-            console.log("findAll");
             if (keys.notes != null) {
                 try {
                     _this.data = JSON.parse(keys.notes);

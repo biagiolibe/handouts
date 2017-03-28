@@ -5,7 +5,8 @@
 
         <div class="mdl-cell mdl-cell--4-col" ng-repeat="note in noteList | filter: search_text">
           <div class="mdl-card mdl-shadow--2dp ho-card">
-            <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}} | {{note.translation}}</div>
+            <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}}</div>
+            <div class="mdl-card__supporting-text mdl-card--expand mdl-card--border" ng-show="note.translation!=''">{{note.translation}}</div>
             <div class="mdl-card__actions mdl-card--border">
               <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="remove(note)">REMOVE</a>
             </div>

@@ -38,48 +38,10 @@ this.translate = function(text, source_lang, target_lang, callback) {
   xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
-    }
+    };
   xmlHttp.open( "GET", url, true ); // false for synchronous request
   xmlHttp.send( null );
 
-
-  // Loads the JavaScript client library and invokes `start` afterwards.
-  //gapi.load('client', this.start);
-
-  /*
-  var urlAPITranslationReq = "https://translation.googleapis.com/language/translate/v2?key="
-                            + API_KEY + "&source="+ sourceLang +"&target="+ targetLang +"&q=" + encodeURI(sourceText);
-  */
-  /* Option 1
-
-  var translatedText = LanguageApp.translate(sourceText, sourceLang, targetLang);
-
-  /* Option 2
-
-  var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+
-            sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
-
-  var result = JSON.parse(UrlFetchApp.fetch(url).getContentText());
-
-  translatedText = result[0][0][0];
-
-  var json = {
-    'sourceText' : sourceText,
-    'translatedText' : translatedText
-  };
-/*
-  // set JSONP callback
-  var callback = 'callback';
-  if(e.parameter.callback){
-    callback = e.parameter.callback;
-  }
-
-  // return JSONP
-  return ContentService
-           .createTextOutput(callback + '(' + JSON.stringify(json) + ')')
-           .setMimeType(ContentService.MimeType.JAVASCRIPT);
-}
-*/
 };
 
 this.start = function(){

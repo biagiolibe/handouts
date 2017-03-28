@@ -1,7 +1,12 @@
 var defaultSettings = {
     "active": true,
-    "translate":true,
-    "API_KEY_YANDEX": 'trnsl.1.1.20170325T223816Z.1ab15c5d3036ad4e.af8ad45157efd94fa0079b27eb412eb23cbfbd00'
+    "mainAccount":'',
+    "translation":{
+                  "enabled":true,
+                  "API_KEY_YANDEX": 'trnsl.1.1.20170325T223816Z.1ab15c5d3036ad4e.af8ad45157efd94fa0079b27eb412eb23cbfbd00',
+                  "sourceLang":'',
+                  "targetLang":'it'
+                  }
 };
 
 var Settings = defaultSettings;

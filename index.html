@@ -48,6 +48,14 @@
                             Enables handouts
                         </span>
                     </li>
+                    <li class="mdl-menu__item" ng-click="enableOrDisableTranslation()">
+                        <span ng-show="!isTranslationMode()">
+                            Enable Translation mode
+                        </span>
+                        <span ng-show="isTranslationMode()">
+                            Disables Translation mode
+                        </span>
+                    </li>
                     <li class="mdl-menu__item" ng-click="showOptions()">Preferences</li>
                     <!-- <li disabled class="mdl-menu__item">Disabled Action</li> -->
                 </ul>

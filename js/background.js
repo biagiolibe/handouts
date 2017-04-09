@@ -1,3 +1,12 @@
+/*
+* Background js controller.
+* Initialize all components of the Handouts app:
+*   -- Settings.
+*   -- db notes structure
+*/
+
+var storage = chrome.storage.sync;
+
 var defaultSettings = {
     "active": true,
     "mainAccount":'',
@@ -8,19 +17,29 @@ var defaultSettings = {
                   "targetLang":'it'
                   }
 };
+var base_struct;
+var settings = defaultSettings;
 
-var Settings = defaultSettings;
+function initialize() {
+    loadSettings();
+    initializeDB();
+}
+initialize();
 
-function load() {
-    chrome.storage.sync.get('Settings', function(key) {
+
+var loadSettings = function(){
+    storage.get('Settings', function(key) {
         console.log(key.Settings);
         if (key.Settings != null) {
-            Settings=JSON.parse(key.Settings);
+            settings=JSON.parse(key.Settings);
 
         } else {
-            chrome.storage.sync.set({'Settings': JSON.stringify(defaultSettings)}, function() {
+            torage.set({'Settings': JSON.stringify(defaultSettings)}, function() {
             });
         }
     });
-}
-load();
+};
+
+var initializeDB = function(){
+    //initialiaze db notes structure.
+};

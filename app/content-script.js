@@ -32,14 +32,14 @@ document.addEventListener('mouseup', function(tab) {
                 new_note.translation=translated;
 
                 notes.push(new_note);
-                storage.set({'notes': JSON.stringify(notes)}, function() {
-                    // Notify that we saved a new note and fire a user action.
+                pushIntoStorage('notes', notes, function() {
+                    //pushIntoStorage('sequences', sequences, function(){});
                 });
             });
           }
           else{
             notes.push(new_note);
-            storage.set({'notes': JSON.stringify(notes)}, function() {
+            pushIntoStorage('notes', notes, function() {
                 // Notify that we saved a new note and fire a user action.
             });
           }
@@ -47,6 +47,10 @@ document.addEventListener('mouseup', function(tab) {
       }
     }
   });
+
+var pushIntoStorage=function(obj_name, obj, callback){
+  storage.set({obj_name: JSON.stringify(obj)}, callback);
+}
 
 var makeTranslation = function(sourceText, API_KEY_YANDEX, sourceLang, targetLang, callback){
 
@@ -60,9 +64,13 @@ var makeTranslation = function(sourceText, API_KEY_YANDEX, sourceLang, targetLan
 
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
             callback(JSON.parse(xmlHttp.responseText).text[0]);
-  }
+        }
+        else{
+            callback('');
+        }
+  };
   xmlHttp.open( "GET", url, true ); // false for synchronous request
   xmlHttp.send( null );
 };

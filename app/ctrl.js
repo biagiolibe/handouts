@@ -5,7 +5,7 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
     $scope.storageManager = storageManager;
     $scope.driveManager=driveManager;
     $scope.fileManager=fileManager
-    $scope.settings = chrome.extension.getBackgroundPage().Settings;
+    $scope.settings = chrome.extension.getBackgroundPage().settings;
 
     var views={
       home:true,
@@ -54,6 +54,28 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
     $scope.removeAll = function() {
         storageManager.removeAll();
     };
+
+    //TRANSLATION MANAGEMENT
+
+    $scope.translate = function(note_id){
+      for (var i in $scope.noteList){
+        if($scope.noteList[i].id==note_id){
+          translationManager.translate($scope.noteList[i].content, function(translated){
+            console.log('chatched');
+            $scope.noteList[i].translation=translated;
+            storageManager.data=$scope.noteList;
+            storageManager.sync();
+          });
+        }
+      }
+
+    }
+
+
+
+
+
+    //DRIVE MANAGEMENT
 
     /*
     * Create a new drive document

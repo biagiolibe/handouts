@@ -71,10 +71,6 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
 
     }
 
-
-
-
-
     //DRIVE MANAGEMENT
 
     /*

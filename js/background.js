@@ -17,15 +17,10 @@ var defaultSettings = {
                   "targetLang":'it'
                   }
 };
-var base_struct;
+var base_struct = {
+
+};
 var settings = defaultSettings;
-
-function initialize() {
-    loadSettings();
-    initializeDB();
-}
-initialize();
-
 
 var loadSettings = function(){
     storage.get('Settings', function(key) {
@@ -34,7 +29,7 @@ var loadSettings = function(){
             settings=JSON.parse(key.Settings);
 
         } else {
-            torage.set({'Settings': JSON.stringify(defaultSettings)}, function() {
+            storage.set({'Settings': JSON.stringify(defaultSettings)}, function() {
             });
         }
     });
@@ -43,3 +38,9 @@ var loadSettings = function(){
 var initializeDB = function(){
     //initialiaze db notes structure.
 };
+
+function initialize() {
+    loadSettings();
+    initializeDB();
+}
+initialize();

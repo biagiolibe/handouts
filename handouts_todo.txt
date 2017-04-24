@@ -11,5 +11,6 @@ To do list Handouts app
 - Add comment on notes
 - Add smart suggestions on saved notes
 - Add positioning mechanism
+- Move properties into a prop file
 
 - Add tag mechanism -- secondary

@@ -18,18 +18,21 @@ var defaultSettings = {
                   }
 };
 var base_struct = {
-
+    NOTES : {
+        PAGES : [],
+    },
+    TRANSLATIONS : [],
 };
 var settings = defaultSettings;
 
 var loadSettings = function(){
     storage.get('Settings', function(key) {
-        console.log(key.Settings);
         if (key.Settings != null) {
             settings=JSON.parse(key.Settings);
-
+            console.log('Default settings loaded!');
         } else {
             storage.set({'Settings': JSON.stringify(defaultSettings)}, function() {
+                console.log('Default settings created!');
             });
         }
     });
@@ -37,10 +40,15 @@ var loadSettings = function(){
 
 var initializeDB = function(){
     //initialiaze db notes structure.
+    storage.set({'Handouts_db': JSON.stringify(base_struct)},function(){
+        console.log('Database configured!');
+    });
 };
 
 function initialize() {
+    console.log('Installing Handouts...');
     loadSettings();
     initializeDB();
+    console.log('Handouts installed and configured!');
 }
 initialize();

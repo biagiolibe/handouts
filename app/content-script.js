@@ -1,78 +1,86 @@
 document.addEventListener('mouseup', function(tab) {
 
-  var storage=chrome.storage.sync;
-  storage.get('Settings', function(keys) {
-    if(keys.Settings != null){
-      var settings=JSON.parse(keys.Settings);
+    var storage = chrome.storage.sync;
+    storage.get('SETTINGS', function(keys) {
+        if (keys.SETTINGS != null) {
+            var settings = JSON.parse(keys.SETTINGS);
 
-      if(!settings.active){
-        return;
-      }
+            if (!settings.active) {
+                return;
+            }
 
-      var highlighted = window.getSelection().toString();
+            var highlighted = window.getSelection().toString();
+            var notes = {};
 
-      if(highlighted){
-        var notes=[];
-        var id = 1;
-        var date=new Date();
+            if (highlighted) {
+                storage.get('NOTES', function(obj) {
+                    console.log(obj);
+                    if (obj.NOTES != null) {
+                        notes = JSON.parse(obj.NOTES);
+                    }
+                    var new_note = createNewNote(highlighted);
 
-        storage.get('notes', function(obj){
-          if(obj.notes != null){
-            notes=JSON.parse(obj.notes).slice(0);
-          }
-          var new_note = {
-              id: +date,
-              content: highlighted,
-              createdAt: date,
-              translation: ''
-          };
-
-          if(settings.translation.enabled){
-              makeTranslation(highlighted, settings.translation.API_KEY_YANDEX, settings.translation.sourceLang, settings.translation.targetLang, function(translated){
-                new_note.translation=translated;
-
-                notes.push(new_note);
-                pushIntoStorage('notes', notes, function() {
-                    //pushIntoStorage('sequences', sequences, function(){});
+                    if (settings.translation.enabled) {
+                        makeTranslation(highlighted, settings.translation.API_KEY_YANDEX, settings.translation.sourceLang, settings.translation.targetLang, function(translated) {
+                            new_note.translation = translated;
+                            notes.TRANSLATIONS.push(new_note);
+                            storage.set({ 'NOTES': JSON.stringify(notes) }, function() {
+                                //pushIntoStorage('sequences', sequences, function(){});
+                            });
+                        });
+                    } else {
+                        notes.NOTES.push(new_note);
+                        storage.set({ 'NOTES': JSON.stringify(notes) }, function() {
+                            //pushIntoStorage('NOTES', notes, function() {
+                            // Notify that we saved a new note and fire a user action.
+                        });
+                    }
                 });
-            });
-          }
-          else{
-            notes.push(new_note);
-            pushIntoStorage('notes', notes, function() {
-                // Notify that we saved a new note and fire a user action.
-            });
-          }
-        });
-      }
-    }
-  });
-
-var pushIntoStorage=function(obj_name, obj, callback){
-  storage.set({obj_name: JSON.stringify(obj)}, callback);
-}
-
-var makeTranslation = function(sourceText, API_KEY_YANDEX, sourceLang, targetLang, callback){
-
-  var langDir='';
-  if(sourceLang != ''){
-    langDir = sourceLang+'-';
-  }
-  langDir += targetLang;
-
-  var url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=" + API_KEY_YANDEX + "&text="+sourceText+"&lang="+langDir;
-
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            callback(JSON.parse(xmlHttp.responseText).text[0]);
+            }
         }
-        else{
-            callback('');
+    });
+
+    var createNewNote = function(content) {
+        return {
+            id: guid(),
+            content: content,
+            page: 0, //find a way to manage active page
+            paragraph: 0,
+            createdAt: new Date(),
+            translation: ''
+        };
+    };
+
+    var makeTranslation = function(sourceText, API_KEY_YANDEX, sourceLang, targetLang, callback) {
+
+        var langDir = '';
+        if (sourceLang != '') {
+            langDir = sourceLang + '-';
         }
-  };
-  xmlHttp.open( "GET", url, true ); // false for synchronous request
-  xmlHttp.send( null );
-};
+        langDir += targetLang;
+
+        var url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=" + API_KEY_YANDEX + "&text=" + sourceText + "&lang=" + langDir;
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                callback(JSON.parse(xmlHttp.responseText).text[0]);
+            } else {
+                callback('');
+            }
+        };
+        xmlHttp.open("GET", url, true); // false for synchronous request
+        xmlHttp.send(null);
+    };
+
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    };
 
 });

@@ -1,26 +1,26 @@
 <script type="text/javascript-lazy" src="js/style.js"></script>
+<section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+    <div class="page-content">
+        <div class="centeritems mdl-grid">
 
-<div class="page-content">
-      <div class="centeritems mdl-grid">
-
-        <div class="mdl-cell mdl-cell--4-col" ng-repeat="note in noteList | filter: search_text">
-          <div class="mdl-card mdl-shadow--2dp ho-card">
-            <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}}</div>
-            <div class="mdl-card__actions mdl-card--border" ng-show="isTranslationMode()">
-              <div class="mdl-card__supporting-text mdl-card--expand" ng-show="note.translation!=''">{{note.translation}}</div>
-              <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="translate(note.id)" ng-show="note.translation==''">TRANSLATE</a>
+            <div class="mdl-cell mdl-cell--4-col" ng-repeat="note in noteList.NOTES | filter: search_text">
+                <div class="mdl-card mdl-shadow--2dp ho-card">
+                    <div class="mdl-card__supporting-text mdl-card--expand">{{note.content}}</div>
+                    <div class="mdl-card__actions mdl-card--border" ng-show="isTranslationMode()">
+                        <div class="mdl-card__supporting-text mdl-card--expand" ng-show="note.translation!=''">{{note.translation}}</div>
+                        <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#" ng-click="translate(note.id)" ng-show="note.translation==''">TRANSLATE</a>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#" ng-click="remove(note)">REMOVE</a>
+                    </div>
+                </div>
             </div>
-            <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="#"  ng-click="remove(note)">REMOVE</a>
-            </div>
-          </div>
         </div>
-      </div>
 
     </div>
     <div class="mdl-button--fab_flinger-container--left">
-      <div class="mdl-tooltip mdl-tooltip--top" for="remove_all">Remove all notes</div>
-      <button id="remove_all" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="#"  ng-click="removeAll()" ng-show="noteList.length > 0">
+        <div class="mdl-tooltip mdl-tooltip--top" for="remove_all">Remove all notes</div>
+        <button id="remove_all" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="#" ng-click="removeAll()" ng-show="noteList.length > 0">
         <i class="material-icons">clear</i>
       </button>
 
@@ -30,13 +30,19 @@
           <i class="material-icons">book</i>
         </button>
         <div class="mdl-button--fab_flinger-options">
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('TXT')">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('TXT')">
             TXT
             <!--<i class="material-icons">local_printshop</i>-->
           </button>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('PDF')">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" ng-click="generateFile('PDF')">
             <i class="material-icons">picture_as_pdf</i>
           </button>
         </div>
 
-  </div>
+    </div>
+</section>
+<section class="mdl-layout__tab-panel" id="fixed-tab-2">
+    <div class="page-content">
+        Your content goes here
+    </div>
+</section>

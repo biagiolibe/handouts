@@ -1,44 +1,30 @@
 'use strict';
 
-angular.module('app').controller('ctrl', function ($scope, storageManager, driveManager, fileManager, translationManager) {
+angular.module('app').controller('ctrl', function($scope, storageManager, driveManager, fileManager, translationManager) {
 
     $scope.storageManager = storageManager;
-    $scope.driveManager=driveManager;
-    $scope.fileManager=fileManager
+    $scope.driveManager = driveManager;
+    $scope.fileManager = fileManager;
     $scope.settings = chrome.extension.getBackgroundPage().settings;
 
-    var views={
-      home:true,
-      filePreview:false
+    $scope.tabs = {};
+
+    var views = {
+        home: true,
+        filePreview: false
     };
 
-
-    $scope.isActive=function(){
-      return $scope.settings.active;
-    };
-    $scope.isTranslationMode=function(){
-      return $scope.settings.translation.enabled;
-    };
-
-    $scope.showOptions = function(){
-      //Open window with options
-    };
-
-    $scope.enableOrDisable = function(){
-      $scope.settings.active=!$scope.settings.active;
-      $scope.storageManager.updateSettings($scope.settings);
-    };
-    $scope.enableOrDisableTranslation = function(){
-      $scope.settings.translation.enabled=!$scope.settings.translation.enabled;
-      $scope.storageManager.updateSettings($scope.settings);
-    };
+    /**
+     * Storage Management
+     */
 
     $scope.$watch('storageManager.data', function() {
         $scope.noteList = $scope.storageManager.data;
     });
 
-    $scope.storageManager.findAll(function(data){
+    $scope.storageManager.findAll(function(data) {
         $scope.noteList = data;
+        $scope.tabs = getTabs();
         $scope.$apply();
     });
 
@@ -55,106 +41,147 @@ angular.module('app').controller('ctrl', function ($scope, storageManager, drive
         storageManager.removeAll();
     };
 
-    //TRANSLATION MANAGEMENT
-
-    $scope.translate = function(note_id){
-      for (var i in $scope.noteList){
-        if($scope.noteList[i].id==note_id){
-          translationManager.translate($scope.noteList[i].content, function(translated){
-            console.log('chatched');
-            $scope.noteList[i].translation=translated;
-            storageManager.data=$scope.noteList;
-            storageManager.sync();
-          });
+    /**
+     * Translation Management
+     */
+    $scope.translate = function(note_id) {
+        for (var i in $scope.noteList) {
+            if ($scope.noteList[i].id == note_id) {
+                translationManager.translate($scope.noteList[i].content, function(translated) {
+                    $scope.noteList[i].translation = translated;
+                    storageManager.data = $scope.noteList;
+                    storageManager.sync();
+                });
+            }
         }
-      }
-
-    }
-
-    //DRIVE MANAGEMENT
-
-    /*
-    * Create a new drive document
-    */
-    $scope.driveCreate = function(){
-      driveManager.createFile();
-    };
-
-    /*
-    * List all drive document
-    */
-    $scope.driveList = function(){
-      driveManager.handleAuth();
-  };
-
-    $scope.generateFile = function(fileType){
-      var text='';
-
-      for (var note in $scope.noteList) {
-        text = text + $scope.noteList[note].content + '\n\n';
-      }
-      $scope.text_document = {
-        text_content:text,
-        document_type: fileType,
-        content_length:text.length
-      };
-
-      views.filePreview=true;
-      views.home=false;
 
     };
 
-    $scope.createFile=function(txtContent, fileType){
-      if(fileType == 'TXT'){
-        fileManager.createTXT(txtContent, 'handouts_document');
-      }
-      else if(fileType == 'PDF'){
-        fileManager.createPDF(txtContent, 'handouts_document');
-      }
+    /**
+     * Navigation Management
+     */
+
+    $scope.isActive = function() {
+        return $scope.settings.active;
+    };
+    $scope.isTranslationMode = function() {
+        return $scope.settings.translation.enabled;
+    };
+
+    $scope.showOptions = function() {
+        //Open window with options
+    };
+
+    $scope.enableOrDisable = function() {
+        $scope.settings.active = !$scope.settings.active;
+        $scope.storageManager.updateSettings($scope.settings);
+    };
+    $scope.enableOrDisableTranslation = function() {
+        $scope.settings.translation.enabled = !$scope.settings.translation.enabled;
+        $scope.storageManager.updateSettings($scope.settings);
     };
 
     /* TODO maybe it would be convenient to change the views object for including information of searchable for each view. */
-    $scope.isContentSearchable=function(){
-      return views.home;
+    $scope.isContentSearchable = function() {
+        return views.home;
     };
 
-    $scope.isFilePreview=function(){
-      return views.filePreview;
+    $scope.isFilePreview = function() {
+        return views.filePreview;
     };
 
-    $scope.isHome=function(){
-      return views.home;
+    $scope.isHome = function() {
+        return views.home;
     };
 
-    $scope.backToHome=function(from){
-      views[from]=!views[from];
-      views['home']=true;
+    $scope.backToHome = function(from) {
+        views[from] = !views[from];
+        views['home'] = true;
     };
 
-});
+    /**
+     * File Management
+     */
+    $scope.generateFile = function(fileType) {
+        var text = '';
 
-angular.module('app').filter('unsafe', function($sce) {//spostare in filters
-    return function(val) {
-      return $sce.trustAsHtml(val);
-    };
-
-});
-
-angular.module('app').directive('elastic', ['$timeout', function($timeout) { //spostare in directives
-        return {
-            restrict: 'A',
-            link: function($scope, element) {
-                $scope.initialHeight = $scope.initialHeight || element[0].style.height;
-                var resize = function() {
-                    element[0].style.height = $scope.initialHeight;
-                    element[0].style.height = "" + element[0].scrollHeight + "px";
-                };
-                element.on("input change", resize);
-                $timeout(resize, 0);
-            }
+        for (var note in $scope.noteList.NOTES) {
+            text = text + $scope.noteList.NOTES[note].content + '\n\n';
+        }
+        $scope.text_document = {
+            text_content: text,
+            document_type: fileType,
+            content_length: text.length
         };
-    }
-]);
+
+        views.filePreview = true;
+        views.home = false;
+
+    };
+
+    $scope.createFile = function(txtContent, fileType) {
+        if (fileType == 'TXT') {
+            fileManager.createTXT(txtContent, 'handouts_document');
+        } else if (fileType == 'PDF') {
+            fileManager.createPDF(txtContent, 'handouts_document');
+        }
+    };
+
+
+    /**
+     * Utils
+     */
+    function getTabs() {
+        var tabMap = { 0: 'Tab-0' };
+        if (!$scope.settings.translation.enabled) {
+            for (var n in $scope.noteList.NOTES) {
+                tabMap[$scope.noteList.NOTES[n].page] = 'Tab-' + $scope.noteList.NOTES[n].page;
+            }
+        }
+        console.log(tabMap);
+        return tabMap;
+    };
+
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    };
+
+});
+
+
+/**
+ * Filters
+ */
+angular.module('app').filter('unsafe', function($sce) { //spostare in filters
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
+
+});
+
+/**
+ * Directives
+ */
+angular.module('app').directive('elastic', ['$timeout', function($timeout) { //spostare in directives
+    return {
+        restrict: 'A',
+        link: function($scope, element) {
+            $scope.initialHeight = $scope.initialHeight || element[0].style.height;
+            var resize = function() {
+                element[0].style.height = $scope.initialHeight;
+                element[0].style.height = "" + element[0].scrollHeight + "px";
+            };
+            element.on("input change", resize);
+            $timeout(resize, 0);
+        }
+    };
+}]);
 
 /*
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
